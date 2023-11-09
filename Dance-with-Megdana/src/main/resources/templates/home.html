@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Dance With Megdana</title>
+
 </head>
 <body>
     <h1>This is the learning page "Dance with Megdana"</h1>
     <div class = showcase>
-        <h3>Test button</h3>
-        <p>Just a test paragraph to see how it works</p>
-        <a href = "/test" class = btn>Button to press</a>
+        <p th:text="${message}">Just a test paragraph to see how it works</p>
+    </div>
+
+    <div>
+        <a th:href="@{/test}" th:attribute="@{${url}}">test_test</a>
     </div>
 </body>
 </html>
