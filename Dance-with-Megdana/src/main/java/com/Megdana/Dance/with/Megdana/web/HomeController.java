@@ -11,7 +11,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHome (Model model) {
-        model.addAttribute("message", "Y U not working?");
+        model.addAttribute("message", "Generic text to show Thymeleaf attributes in operation ;)");
         model.addAttribute("url", "test URL");
         return "home";
     }

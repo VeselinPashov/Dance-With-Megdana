@@ -1,9 +1,6 @@
 package com.Megdana.Dance.with.Megdana.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +18,7 @@ public class Rehearsal extends  BaseEntity{
     @Column
     private String location;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private List<Dance> dance;
 
     public Rehearsal() {
