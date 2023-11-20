@@ -1,5 +1,6 @@
 package com.Megdana.Dance.with.Megdana.web;
 
+import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserLoginForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserRegisterForm;
 import com.Megdana.Dance.with.Megdana.repositories.UserRepository;
 import com.Megdana.Dance.with.Megdana.services.UserService;
@@ -49,6 +50,24 @@ public class AuthController extends BaseController {
         return super.redirect("register");
     }
 
+    @GetMapping("/login")
+    public ModelAndView getLogin (ModelAndView modelAndView){
+        return super.view("login", modelAndView);
+    }
+
+    @PostMapping("/login")
+    public ModelAndView postLogin(@Validated UserLoginForm userLoginForm,
+                                  BindingResult bindingResult,
+                                  ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            return super.view("login", modelAndView.addObject(userLoginForm));
+        }
+
+        return this.userService.loginUser(userLoginForm).isValid()
+                ?super.redirect("/")
+                :super.redirect("login");
+    }
+
 
 
     // Model Attributes
@@ -57,8 +76,8 @@ public class AuthController extends BaseController {
         return new UserRegisterForm();
     }
 
-//    @ModelAttribute("userLoginForm")
-//    public UserLoginForm initLoginForm() {
-//        return new UserLoginForm();
-//    }
+    @ModelAttribute("userLoginForm")
+    public UserLoginForm initLoginForm() {
+        return new UserLoginForm();
+    }
 }

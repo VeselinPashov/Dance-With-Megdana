@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class UserModel {
 
-    private long id;
+    private Long id;
     private String userName;
     private String password;
     private String email;
@@ -21,7 +21,11 @@ public class UserModel {
     public UserModel() {
     }
 
-    public long getId() {
+    public boolean isValid () {
+        return this.id != null;
+    }
+
+    public Long getId() {
         return id;
     }
 
