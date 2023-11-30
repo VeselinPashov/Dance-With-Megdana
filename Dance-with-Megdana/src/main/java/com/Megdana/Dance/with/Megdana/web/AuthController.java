@@ -47,7 +47,7 @@ public class AuthController extends BaseController {
 
         this.userService.registerUser(userRegisterForm);
 
-        return super.redirect("register");
+        return super.redirect("login");
     }
 
     @GetMapping("/login")
@@ -66,6 +66,12 @@ public class AuthController extends BaseController {
         return this.userService.loginUser(userLoginForm).isValid()
                 ?super.redirect("/")
                 :super.redirect("login");
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView postLogout() {
+        this.userService.logout();
+        return super.redirect("/");
     }
 
 

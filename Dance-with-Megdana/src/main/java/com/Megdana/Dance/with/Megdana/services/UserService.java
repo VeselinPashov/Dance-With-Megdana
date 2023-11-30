@@ -63,6 +63,11 @@ public class UserService {
 
     }
 
+    public void logout() {
+        this.loggedUser.clearFields();
+    }
+
+
     public UserModel findByUsername(String username) {
         return this.modelMapper
                 .map(this.userRepository

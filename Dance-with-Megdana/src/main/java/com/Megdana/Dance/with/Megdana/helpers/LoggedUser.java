@@ -2,9 +2,11 @@ package com.Megdana.Dance.with.Megdana.helpers;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.models.RoleModel;
 import com.Megdana.Dance.with.Megdana.domain.enums.RoleName;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Component
 public class LoggedUser {
     private Long id;
     private String username;

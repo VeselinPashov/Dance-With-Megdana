@@ -13,6 +13,7 @@
       <li>
         <a th:href="@{/auth/register}">Register</a>
       </li>
+
 <!--      TODO-->
       <li>
         <a href="/about">About</a>
@@ -21,7 +22,7 @@
     </ul>
     <ul> <!-- th:unless="${@loggedUser.id == null}" -->
       <li>
-        <a th:href="@{/routes/add}">Add new route</a>
+        <a th:href="@{/auth/logout}">Logout</a>
       </li>
 
       <li>
