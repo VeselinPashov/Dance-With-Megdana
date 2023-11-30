@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping ("/auth")
+@RequestMapping("/auth")
 public class AuthController extends BaseController {
 
     private final UserService userService;
@@ -33,12 +33,12 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/register")
-    public ModelAndView postRegister (@Validated UserRegisterForm userRegisterForm,
-                                      BindingResult bindingResult,
-                                      ModelAndView modelAndView) {
+    public ModelAndView postRegister(@Validated UserRegisterForm userRegisterForm,
+                                     BindingResult bindingResult,
+                                     ModelAndView modelAndView) {
 
         if (this.userRepository.findByUserName(userRegisterForm.getUserName()).isPresent()) {
-            bindingResult.rejectValue("email", null,"There is already an account registered with the same email");
+            bindingResult.rejectValue("email", null, "There is already an account registered with the same email");
         }
 
         if (bindingResult.hasErrors()) {
@@ -51,7 +51,7 @@ public class AuthController extends BaseController {
     }
 
     @GetMapping("/login")
-    public ModelAndView getLogin (ModelAndView modelAndView){
+    public ModelAndView getLogin(ModelAndView modelAndView) {
         return super.view("login", modelAndView);
     }
 
@@ -64,8 +64,8 @@ public class AuthController extends BaseController {
         }
 
         return this.userService.loginUser(userLoginForm).isValid()
-                ?super.redirect("/")
-                :super.redirect("login");
+                ? super.redirect("/")
+                : super.redirect("login");
     }
 
     @GetMapping("/logout")
@@ -73,7 +73,6 @@ public class AuthController extends BaseController {
         this.userService.logout();
         return super.redirect("/");
     }
-
 
 
     // Model Attributes

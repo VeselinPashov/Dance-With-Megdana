@@ -2,44 +2,44 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org/">
 <header>
-  <nav class="main-nav">
-    <ul> <!-- th:if="${@loggedUser.id == null}" -->
-      <li>
-        <a th:href="@{/}">Home</a>
-      </li>
-      <li>
-        <a th:href="@{/auth/login}">Login</a>
-      </li>
-      <li>
-        <a th:href="@{/auth/register}">Register</a>
-      </li>
+    <nav class="main-nav">
+        <ul th:if="${@loggedUser.id == null}">
+            <li>
+                <a th:href="@{/}">Home</a>
+            </li>
+            <li>
+                <a th:href="@{/auth/login}">Login</a>
+            </li>
+            <li>
+                <a th:href="@{/auth/register}">Register</a>
+            </li>
 
-<!--      TODO-->
-      <li>
-        <a href="/about">About</a>
-      </li>
+            <!--      TODO-->
+            <li>
+                <a href="/about">About</a>
+            </li>
 
-    </ul>
-    <ul> <!-- th:unless="${@loggedUser.id == null}" -->
-      <li>
-        <a th:href="@{/auth/logout}">Logout</a>
-      </li>
+        </ul>
+        <ul th:unless="${@loggedUser.id == null}">
 
-      <li>
-        <a th:href="@{/users/profile}">Profile</a>
-      </li>
+            <p th:text="${'You are logged as: '+@loggedUser.username}">Just a test paragraph to see how it works</p>
 
-      <!--  <li th:if="${@loggedUser.isAdmin()}">
-        <a href="/">Admin</a>
-      </li>
 
-      <li th:unless="${@loggedUser.isAdmin()}">
-      </li>
+            <li>
+                <a th:href="@{/users/profile}">Profile</a>
+            </li>
 
-      <li>
-        <a th:href="@{/auth/logout}">Logout</a>
-      </li>    -->
-    </ul>
-  </nav>
+            <li th:if="${@loggedUser.isAdmin()}">
+                <a href="/">Admin</a>
+            </li>
+
+            <li th:unless="${@loggedUser.isAdmin()}">
+            </li>
+
+            <li>
+                <a th:href="@{/auth/logout}">Logout</a>
+            </li>
+        </ul>
+    </nav>
 </header>
 </html>

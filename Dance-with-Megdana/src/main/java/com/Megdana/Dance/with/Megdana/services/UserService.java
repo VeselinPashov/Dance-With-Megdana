@@ -3,6 +3,7 @@ package com.Megdana.Dance.with.Megdana.services;
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserLoginForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserRegisterForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.models.UserModel;
+import com.Megdana.Dance.with.Megdana.domain.dto.view.UserProfileModel;
 import com.Megdana.Dance.with.Megdana.domain.entities.User;
 import com.Megdana.Dance.with.Megdana.helpers.LoggedUser;
 import com.Megdana.Dance.with.Megdana.repositories.UserRepository;
@@ -22,10 +23,10 @@ public class UserService {
     private final LoggedUser loggedUser;
 
     @Autowired
-    public UserService (UserRepository userRepository,
-                        RoleService roleService,
-                        ModelMapper modelMapper,
-                        LoggedUser loggedUser){
+    public UserService(UserRepository userRepository,
+                       RoleService roleService,
+                       ModelMapper modelMapper,
+                       LoggedUser loggedUser) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
@@ -37,19 +38,19 @@ public class UserService {
 
         userModel.setRoles(this.userRepository.count() == 0
                 ? this.roleService.findAllRoles()
-                : Set.of((this.roleService.findRoleByName("USER"))));
+                : Set.of((this.roleService.findRoleByName("ADMIN"))));
 
         final User userToSave = this.modelMapper.map(userModel, User.class);
 
         this.modelMapper.map(this.userRepository.saveAndFlush(userToSave), UserModel.class);
     }
 
-    public UserModel loginUser (UserLoginForm userLoginForm) {
+    public UserModel loginUser(UserLoginForm userLoginForm) {
         Optional<User> loginCandidate = this.userRepository.findByUserName(userLoginForm.getUsername());
 
-        UserModel userConfirmation =loginCandidate.isPresent()
+        UserModel userConfirmation = loginCandidate.isPresent()
                 && loginCandidate.get().getUserName().equals(userLoginForm.getUsername())
-                ?this.modelMapper.map(loginCandidate.get(), UserModel.class)
+                ? this.modelMapper.map(loginCandidate.get(), UserModel.class)
                 : new UserModel();
 
         if (userConfirmation.isValid()) {
@@ -59,7 +60,7 @@ public class UserService {
                     .setRoles(userConfirmation.getRoles());
         }
 
-        return  userConfirmation;
+        return userConfirmation;
 
     }
 
@@ -74,6 +75,10 @@ public class UserService {
                                 .findByUserName(username)
                                 .orElse(new User())
                         , UserModel.class);
+    }
+
+    public UserProfileModel getLoggedUserProfile() {
+        return this.modelMapper.map(this.userRepository.findById(loggedUser.getId()), UserProfileModel.class);
     }
 
 
