@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<th:block th:insert="~{/fragments/head}"></th:block>
+
+<body>
+    <!--    Navigation-->
+    <header th:replace="~{/fragments/navigation}"></header>
+    <h1>This is the learning page "Dance with Megdana"</h1>
+    <div class = showcase>
+        <p th:text="${message}">Just a test paragraph to see how it works</p>
+    </div>
+
+    <div>
+        <a th:href="@{${url}}" th:attribute="@{${url}}" th:text="${url}">test_test</a>
+    </div>
+
+    <footer th:replace="~{/fragments/footer}"></footer>
+
+</body>
+</html>
