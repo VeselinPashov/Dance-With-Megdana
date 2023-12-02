@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org/">
 <header>
     <nav class="main-nav">
+        <a th:href="@{/}">Home</a>
         <ul th:if="${@loggedUser.id == null}">
             <li>
                 <a th:href="@{/}">Home</a>
@@ -30,10 +31,7 @@
             </li>
 
             <li th:if="${@loggedUser.isAdmin()}">
-                <a href="/">Admin</a>
-            </li>
-
-            <li th:unless="${@loggedUser.isAdmin()}">
+                <a href="/admin/console">Admin Console</a>
             </li>
 
             <li>

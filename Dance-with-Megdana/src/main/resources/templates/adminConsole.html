@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<header th:replace="~{/fragments/navigation}">
+</header>
+<div class="profile-card p-3 py-4" th:object="${userList}">
+    <h5 class="mt-4 mb-0">Registered users</h5>
+    <ul th:each="user : ${userList}">
+        <li>
+
+            <a th:text="${user.username}">User Name</a>
+            <h5 class="mt-4 mb-0">Roles</h5>
+            <ul th:each="role : ${user.roles}">
+                <li>
+                    <a th:text="${role.role}">Role</a>
+                </li>
+
+                <li th:if="${#strings.equals(role.role, 'ADMIN')}">
+                    <a th:href="@{removeAdminRole/{id}(id=${user.id})}">Remove Admin role</a>
+                </li>
+                <li th:unless="${#strings.equals(role.role, 'ADMIN')}">
+                    <a th:href="@{'addRole/{ADMIN}{'+${user.id}+'}'}">Make Admin</a>
+
+                </li>
+                <li th:if="${#strings.equals(role.role, 'EDITOR')}">
+                    <a th:href="@{'removeRole/{EDITOR}{'+${user.id}+'}'}">Remove Editor role</a>
+                </li>
+                <li th:unless="${#strings.equals(role.role, 'EDITOR')}">
+                    <a th:href="@{'addRole/{EDITOR}{'+${user.id}+'}'}">Make Editor</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+<footer th:replace="~{fragments/footer}"></footer>
+</html>

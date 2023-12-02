@@ -13,6 +13,7 @@
                 <div class="profile-card p-3 py-4" th:object="${profile}">
                     <div class="text-center"><img src="/images/profile.jpg" width="100" class="rounded-circle"></div>
                     <div class="text-center mt-3">
+                        <h5 class="mt-4 mb-0">Assigned roles</h5>
                         <ul th:each="role : ${profile.roles}">
                             <li>
                                 <a th:text="${role.role}">Role</a>
@@ -22,7 +23,7 @@
                         <h5 class="mt-4 mb-0">First name</h5>
                         <span th:text="*{firstName}">UI/UX Designer</span>
 
-                        <h5 class="mt-4 mb-0">last name</h5>
+                        <h5 class="mt-4 mb-0">Last name</h5>
                         <span th:text="*{lastName}">UI/UX Designer</span>
 
                         <h5 class="mt-2 mb-0">Username</h5>

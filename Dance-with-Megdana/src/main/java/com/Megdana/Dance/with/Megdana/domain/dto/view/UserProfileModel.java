@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class UserProfileModel {
 
+    private Long id;
     private String username;
     private String firstName;
     private String lastName;
@@ -13,6 +14,14 @@ public class UserProfileModel {
     private Set<Role> roles;
 
     public UserProfileModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
