@@ -1,0 +1,132 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<main class="p-5 align-content-center bg-blur my-register-div">
+  <h1 class="border-bottom">Register</h1>
+  <header th:replace="~{/fragments/navigation}"></header>
+  <div class="d-flex justify-content-center ">
+    <div class="row g-3">
+      <form
+              th:action="@{/admin/editUser}"
+              th:method="POST"
+              th:object="${userToEdit}">
+
+        <div>
+          <div class="col-auto">
+            <label for="inputUserID" class="col-form-label ">ID</label>
+          </div>
+          <div class="col-auto">
+            <input name="id" required
+                   th:value="*{id}"
+                   type="number"
+                   id="inputUserID"
+                   class="form-control"
+                   aria-describedby="userIDHelpInline"/>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-auto">
+            <label for="inputUsername" class="col-form-label ">Username</label>
+          </div>
+          <div class="col-auto">
+            <input name="userName" required
+                   th:value="*{userName}"
+                   minlength="5" maxlength="20"
+                   type="text"
+                   id="inputUserName"
+                   class="form-control"
+                   aria-describedby="usernameHelpInline"/>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-auto">
+            <label for="inputFirstName" class="col-form-label ">First Name</label>
+          </div>
+          <div class="col-auto">
+            <input name="firstName"
+                   th:value="*{firstName}"
+                   required minlength="5" maxlength="20"
+                   type="text"
+                   id="inputFirstName"
+                   class="form-control"
+                   aria-describedby="firstNameHelpInline">
+            <small id="firstNameError"
+                   th:if="${#fields.hasErrors('firstName')}"
+                   class="invalid-feedback  form-text bg-danger rounded">First name length must be more than
+              5 characters</small>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-auto">
+            <label for="inputLastName" class="col-form-label ">Last Name</label>
+          </div>
+          <div class="col-auto">
+            <input name="lastName"
+                   th:value="*{lastName}"
+                   required minlength="5" maxlength="20"
+                   type="text"
+                   id="inputLastName"
+                   class="form-control"
+                   aria-describedby="lastNameHelpInline">
+            <small id="lastNameError"
+                   th:if="${#fields.hasErrors('lastName')}"
+                   class="invalid-feedback  form-text bg-danger rounded">Last name length must be more than
+              5 characters</small>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-auto">
+            <label for="inputEmail" class="col-form-label ">Email</label>
+          </div>
+          <div class="col-auto">
+            <input name="email"
+                   th:value="*{email}"
+                   required
+                   type="email"
+                   id="inputEmail"
+                   class="form-control"
+                   aria-describedby="emailHelpInline">
+            <small id="emailError"
+                   th:if="${#fields.hasErrors('email')}"
+                   class="invalid-feedback  form-text bg-danger rounded"
+                   th:errors="*{email}">Email is not valid or is already used!</small>
+          </div>
+        </div>
+
+        <!-- TODO implement editing roles-->
+        <!--
+        <div>
+          <div class="col-auto">
+            <label for="inputUserRoles" class="col-form-label ">Roles</label>
+          </div>
+          <div class="col-auto">
+            <input name="roles" required
+                   th:value="*{roles}"
+                   type="text"
+                   id="inputUserRoles"
+                   class="form-control"
+                   aria-describedby="userRolesHelpInline"/>
+          </div>
+        </div>
+        -->
+
+        <div class="d-flex justify-content-center mt-4">
+          <button class="btn btn-primary btn-block w-50" type="submit">Submit Edits</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer th:replace="~{/fragments/footer}"></footer>
+
+</body>
+</html>
