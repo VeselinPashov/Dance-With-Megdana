@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -66,6 +67,22 @@ public class UserService {
 
         return userConfirmation;
 
+    }
+
+    public void editUser(UserProfileModel userToEdit) throws NoSuchObjectException {
+        final User userToSave = this.modelMapper.map(userToEdit, User.class);
+
+        if(this.userRepository.findById(userToSave.getId()).isPresent()) {
+            User originalUser = this.userRepository.findById(userToSave.getId()).get();
+            originalUser.setUserName(userToSave.getUserName());
+            originalUser.setFirstName(userToSave.getFirstName());
+            originalUser.setLastName(userToSave.getLastName());
+            originalUser.setEmail(userToSave.getEmail());
+            originalUser.setRoles(userToSave.getRoles());
+            this.userRepository.saveAndFlush(originalUser);
+        } else {
+            throw new NoSuchObjectException("User with id:"+userToEdit.getId()+"is not found");
+        }
     }
 
     public void logout() {
