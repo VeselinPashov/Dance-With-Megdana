@@ -4,7 +4,9 @@ import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserLoginForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserRegisterForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.models.UserModel;
 import com.Megdana.Dance.with.Megdana.domain.dto.view.UserProfileModel;
+import com.Megdana.Dance.with.Megdana.domain.entities.Role;
 import com.Megdana.Dance.with.Megdana.domain.entities.User;
+import com.Megdana.Dance.with.Megdana.domain.enums.RoleName;
 import com.Megdana.Dance.with.Megdana.helpers.LoggedUser;
 import com.Megdana.Dance.with.Megdana.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -40,7 +42,7 @@ public class UserService {
 
         userModel.setRoles(this.userRepository.count() == 0
                 ? this.roleService.findAllRoles()
-                : Set.of((this.roleService.findRoleByName("ADMIN"))));
+                : Set.of((this.roleService.findRoleByName("USER"))));
 
         final User userToSave = this.modelMapper.map(userModel, User.class);
 
@@ -89,5 +91,17 @@ public class UserService {
                 .stream()
                 .map(u -> this.modelMapper.map(u, UserProfileModel.class))
                 .collect(Collectors.toList());
+    }
+
+    public void removeRole(Long id, String roleName) {
+        Optional<User> userToBeChanged = this.userRepository.findById(id);
+        userToBeChanged.ifPresent(user ->
+                    user.getRoles()
+                            .removeIf(role -> role.getRole().equals(RoleName.valueOf(roleName))));
+    }
+
+    public void addRole(Long id, String roleName) {
+        Optional<User> userToBeChanged = this.userRepository.findById(id);
+        userToBeChanged.ifPresent(user -> user.getRoles().add(new Role(RoleName.valueOf(roleName))));
     }
 }

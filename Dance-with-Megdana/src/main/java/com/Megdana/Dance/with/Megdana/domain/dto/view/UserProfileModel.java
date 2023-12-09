@@ -7,7 +7,7 @@ import java.util.Set;
 public class UserProfileModel {
 
     private Long id;
-    private String username;
+    private String userName;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,12 +24,12 @@ public class UserProfileModel {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getFirstName() {

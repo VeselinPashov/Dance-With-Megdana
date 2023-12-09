@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<header th:replace="~{/fragments/navigation}">
+</header>
+
+<form action="#" th:action="@{/admin/changeRole/{add}}" method="post" th:object="${roles}">
+    <select  th:field="*{id}">
+        <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"></option>
+    </select>
+    <button type="submit">Add role</button>
+</form>
+
+<form action="#" th:action="@{/admin/changeRole/{remove}}" method="post" th:object="${roles}">
+    <select  th:field="*{id}">
+        <option th:each="r : ${roleList}" th:value="${r}" th:text="${r}"></option>
+    </select>
+    <button type="submit">Remove role</button>
+</form>
+
+</body>
+<footer th:replace="~{fragments/footer}"></footer>
+</html>
