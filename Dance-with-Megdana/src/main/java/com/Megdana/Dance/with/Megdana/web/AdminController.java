@@ -5,7 +5,6 @@ import com.Megdana.Dance.with.Megdana.domain.dto.view.UserProfileModel;
 import com.Megdana.Dance.with.Megdana.domain.dto.view.UserRolesModel;
 import com.Megdana.Dance.with.Megdana.domain.entities.Role;
 import com.Megdana.Dance.with.Megdana.domain.entities.User;
-import com.Megdana.Dance.with.Megdana.domain.enums.RoleName;
 import com.Megdana.Dance.with.Megdana.repositories.RoleRepository;
 import com.Megdana.Dance.with.Megdana.repositories.UserRepository;
 import com.Megdana.Dance.with.Megdana.services.UserService;
@@ -15,10 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.rmi.NoSuchObjectException;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Controller
 @RequestMapping ("/admin")
@@ -81,19 +78,15 @@ public class AdminController extends BaseController{
     public ModelAndView postEditRoles (@PathVariable String id,
                                        UserRolesModel userRolesModel,
                                        ModelAndView modelAndView) throws NoSuchObjectException {
-        Optional<User> userToChangeRoles = this.userRepository.findById(Long.parseLong(id));
-        Set<Role> newRoles = new HashSet<>();
-        String[] rolesArray = {userRolesModel.getAdminRole(), userRolesModel.getEditorRole(), userRolesModel.getUserRole()};
-        for (String role : rolesArray) {
-            if(role != null && !role.isEmpty()) {
-                newRoles.add(this.roleRepository.findByRole(RoleName.valueOf(role)).get());
-            }
-        }
-        if(userToChangeRoles.isPresent()){
-            userToChangeRoles.get().setRoles(newRoles);
-            this.userRepository.saveAndFlush(userToChangeRoles.get());
-        } else throw new NoSuchObjectException("User with ID:" + id + "is not found");
+        this.userService.changeRoles(userRolesModel, id);
 
+        return super.view("adminConsole");
+    }
+
+    @GetMapping("/deleteUser/{id}")
+    public ModelAndView getDeleteUser (@PathVariable String id,
+                                       ModelAndView modelAndView) {
+        this.userRepository.delete(this.userRepository.getReferenceById(Long.parseLong(id)));
         return super.view("adminConsole");
     }
 
