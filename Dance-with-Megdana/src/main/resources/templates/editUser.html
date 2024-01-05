@@ -19,9 +19,9 @@
             <label for="inputUserID" class="col-form-label ">ID</label>
           </div>
           <div class="col-auto">
-            <input name="id" required
+            <input type="hidden" name="id"
                    th:value="*{id}"
-                   type="number"
+                   pattern="(?i)User"
                    id="inputUserID"
                    class="form-control"
                    aria-describedby="userIDHelpInline"/>

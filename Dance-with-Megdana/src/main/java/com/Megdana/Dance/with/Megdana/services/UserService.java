@@ -4,16 +4,20 @@ import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserLoginForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.UserRegisterForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.models.UserModel;
 import com.Megdana.Dance.with.Megdana.domain.dto.view.UserProfileModel;
+import com.Megdana.Dance.with.Megdana.domain.dto.view.UserRolesModel;
 import com.Megdana.Dance.with.Megdana.domain.entities.Role;
 import com.Megdana.Dance.with.Megdana.domain.entities.User;
 import com.Megdana.Dance.with.Megdana.domain.enums.RoleName;
 import com.Megdana.Dance.with.Megdana.helpers.LoggedUser;
+import com.Megdana.Dance.with.Megdana.repositories.RoleRepository;
 import com.Megdana.Dance.with.Megdana.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.rmi.NoSuchObjectException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -23,16 +27,18 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final LoggedUser loggedUser;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       RoleService roleService,
+                       RoleRepository roleRepository, RoleService roleService,
                        ModelMapper modelMapper,
                        LoggedUser loggedUser) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.loggedUser = loggedUser;
@@ -110,15 +116,21 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void removeRole(Long id, String roleName) {
-        Optional<User> userToBeChanged = this.userRepository.findById(id);
-        userToBeChanged.ifPresent(user ->
-                    user.getRoles()
-                            .removeIf(role -> role.getRole().equals(RoleName.valueOf(roleName))));
-    }
 
-    public void addRole(Long id, String roleName) {
-        Optional<User> userToBeChanged = this.userRepository.findById(id);
-        userToBeChanged.ifPresent(user -> user.getRoles().add(new Role(RoleName.valueOf(roleName))));
+    public void changeRoles(UserRolesModel userRolesModel, String id) throws NoSuchObjectException {
+        Optional<User> userToChangeRoles = this.userRepository.findById(Long.parseLong(id));
+        Set<Role> newRoles = new HashSet<>();
+        String[] rolesArray = {userRolesModel.getAdminRole(), userRolesModel.getEditorRole(), userRolesModel.getUserRole()};
+        for (String role : rolesArray) {
+            if(role != null && !role.isEmpty()) {
+                if(role.equals("USER") || role.equals("ADMIN") || role.equals("EDITOR")) {
+                    newRoles.add(this.roleRepository.findByRole(RoleName.valueOf(role.toUpperCase())).get());
+                } else throw new InvalidPropertyException(User.class, "Role","One or more user roles is not entered correctly");
+            }
+        }
+        if(userToChangeRoles.isPresent()){
+            userToChangeRoles.get().setRoles(newRoles);
+            this.userRepository.saveAndFlush(userToChangeRoles.get());
+        } else throw new NoSuchObjectException("User with ID:" + id + "is not found");
     }
 }

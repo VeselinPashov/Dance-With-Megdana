@@ -7,8 +7,24 @@
     <!--    Navigation-->
     <header th:replace="~{/fragments/navigation}"></header>
     <h1>This is the learning page "Dance with Megdana"</h1>
-    <div class = showcase>
-        <p th:text="${message}">Just a test paragraph to see how it works</p>
+
+    <div th:if="${@loggedUser.id == null}">
+        <p>Log in to see any content</p>
+    </div>
+
+    <div th:unless="${@loggedUser.id == null}">
+        <h3>Welcome to the web page of Megdana, created for learning purposes. You can start with one of the following suggestions</h3>
+        <ul>
+            <li>
+                <a href="rehearsals">View a list of latest rehearsals</a> <!-- TODO -->
+            </li>
+            <li>
+                <a href="dances">Check our dances</a> <!-- TODO -->
+            </li>
+            <li>
+                <a href="/songs/all">Look through all available songs</a> <!-- TODO -->
+            </li>
+        </ul>
     </div>
 
     <div>
