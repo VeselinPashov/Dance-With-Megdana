@@ -1,0 +1,92 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <h1 class="border-bottom">Add new song</h1>
+    <header th:replace="~{/fragments/navigation}"></header>
+    <div class="d-flex justify-content-center ">
+        <div class="row g-3">
+            <form
+                    th:action="@{/songs/editSong}"
+                    th:method="POST"
+                    th:object="${songToEdit}">
+
+                <div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputSongID" class="col-form-label ">ID</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" name="id"
+                                   th:value="*{id}"
+                                   id="inputSongID"
+                                   class="form-control"
+                                   aria-describedby="userIDHelpInline"/>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <label for="inputName" class="col-form-label ">Name of the song:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="name" required
+                               th:value="*{name}"
+                               minlength="5" maxlength="20"
+                               type="text"
+                               id="inputName"
+                               class="form-control"
+                               aria-describedby="nameHelpInline"/>
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="col-auto">
+                        <label for="inputPerformedBy" class="col-form-label ">Who is performing this song</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="performedBy"
+                               th:value="*{performedBy}"
+                               required minlength="5" maxlength="20"
+                               type="text"
+                               id="inputPerformedBy"
+                               class="form-control"
+                               aria-describedby="performedByHelpInline">
+                        <small id="performedByError"
+                               th:if="${#fields.hasErrors('performedBy')}"
+                               class="invalid-feedback  form-text bg-danger rounded">Artist name length must be more than
+                            5 characters</small>
+                    </div>
+                </div>
+
+                <div>
+                    <select th:field="*{region}">
+                        <option value="">Select region</option>
+                        <option th:each="region : ${regions}" th:value="${region}" th:text="${region}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <select th:field="*{measure}">
+                        <option value="">Select measure</option>
+                        <option th:each="measure : ${measures}" th:value="${measure}" th:text="${measure}"></option>
+                    </select>
+                </div>
+
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit edits to the song</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{/fragments/footer}"></footer>
+
+</body>
+</html>
