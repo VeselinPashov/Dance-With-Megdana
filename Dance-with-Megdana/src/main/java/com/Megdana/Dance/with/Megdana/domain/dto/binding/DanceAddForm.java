@@ -1,41 +1,38 @@
-package com.Megdana.Dance.with.Megdana.domain.entities;
+package com.Megdana.Dance.with.Megdana.domain.dto.binding;
 
-
+import com.Megdana.Dance.with.Megdana.domain.entities.Song;
 import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-@Entity
-@Table (name = "Dances")
-public class Dance extends BaseEntity{
-    @Column (nullable = false)
+public class DanceAddForm {
+
+    @NotNull
+    @Size(min = 5, message = "Name of the dance should be at least 5 letters")
     private String name;
 
-    @ManyToOne
+    @NotNull
     private Song song;
 
-    @Enumerated
+    @NotNull
     private Region region;
 
-    @Enumerated
+    @NotNull
     private Measure measure;
 
-    @Column
     private LocalDate learnedDate;
 
-    @Column
-    private LocalDate lastPlayedDate;
-
-    public Dance() {
+    public DanceAddForm() {
     }
 
     public String getName() {
         return name;
     }
 
-    public Dance setName(String name) {
+    public DanceAddForm setName(String name) {
         this.name = name;
         return this;
     }
@@ -44,7 +41,7 @@ public class Dance extends BaseEntity{
         return song;
     }
 
-    public Dance setSong(Song song) {
+    public DanceAddForm setSong(Song song) {
         this.song = song;
         return this;
     }
@@ -53,7 +50,7 @@ public class Dance extends BaseEntity{
         return region;
     }
 
-    public Dance setRegion(Region region) {
+    public DanceAddForm setRegion(Region region) {
         this.region = region;
         return this;
     }
@@ -62,7 +59,7 @@ public class Dance extends BaseEntity{
         return measure;
     }
 
-    public Dance setMeasure(Measure measure) {
+    public DanceAddForm setMeasure(Measure measure) {
         this.measure = measure;
         return this;
     }
@@ -71,17 +68,8 @@ public class Dance extends BaseEntity{
         return learnedDate;
     }
 
-    public Dance setLearnedDate(LocalDate learnedDate) {
+    public DanceAddForm setLearnedDate(LocalDate learnedDate) {
         this.learnedDate = learnedDate;
-        return this;
-    }
-
-    public LocalDate getLastPlayedDate() {
-        return lastPlayedDate;
-    }
-
-    public Dance setLastPlayedDate(LocalDate lastPlayedDate) {
-        this.lastPlayedDate = lastPlayedDate;
         return this;
     }
 }
