@@ -5,18 +5,21 @@
 </head>
 <body>
 <main class="p-5 align-content-center bg-blur my-register-div">
-    <h1 class="border-bottom">Add new song</h1>
+    <h1 class="border-bottom">Add new dance</h1>
     <header th:replace="~{/fragments/navigation}"></header>
     <div class="d-flex justify-content-center ">
+        <div>
+            <a href="dances/all">Back to the list of all dances</a>
+        </div>
         <div class="row g-3">
             <form
-                    th:action="@{/songs/add}"
+                    th:action="@{/dances/add}"
                     th:method="POST"
-                    th:object="${songAddForm}">
+                    th:object="${danceAddForm}">
 
                 <div>
                     <div class="col-auto">
-                        <label for="inputName" class="col-form-label ">Name of the song:</label>
+                        <label for="inputName" class="col-form-label ">Name of the dance:</label>
                     </div>
                     <div class="col-auto">
                         <input name="name" required
@@ -28,34 +31,21 @@
                                aria-describedby="nameHelpInline"/>
                         <small id="nameError"
                                th:if="${#fields.hasErrors('name')}"
-                               class="invalid-feedback bg-danger rounded">Song name length must be more than 5
+                               class="invalid-feedback bg-danger rounded">Dance name length must be more than 5
                             characters</small>
 
-                        <small id="songNameUniqueError"
+                        <small id="danceNameUniqueError"
                                th:if="${#fields.hasErrors('name')}"
-                               class=" bg-danger rounded">Song name is already occupied</small>
+                               class=" bg-danger rounded">Dance name is already occupied</small>
 
                     </div>
                 </div>
 
-
                 <div>
-                    <div class="col-auto">
-                        <label for="inputPerformedBy" class="col-form-label ">Who is performing this song</label>
-                    </div>
-                    <div class="col-auto">
-                        <input name="performedBy"
-                               th:value="*{performedBy}"
-                               required minlength="5" maxlength="20"
-                               type="text"
-                               id="inputPerformedBy"
-                               class="form-control"
-                               aria-describedby="performedByHelpInline">
-                        <small id="performedByError"
-                               th:if="${#fields.hasErrors('performedBy')}"
-                               class="invalid-feedback  form-text bg-danger rounded">Artist name length must be more than
-                            5 characters</small>
-                    </div>
+                    <select th:field="*{song}">
+                        <option value="">Select a song</option>
+                        <option th:each="song : ${songList}" th:value="${song.id}" th:text="${song.name}"></option>
+                    </select>
                 </div>
 
                 <div>

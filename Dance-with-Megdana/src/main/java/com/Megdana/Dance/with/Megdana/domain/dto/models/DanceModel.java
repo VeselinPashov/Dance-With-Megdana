@@ -1,41 +1,33 @@
-package com.Megdana.Dance.with.Megdana.domain.entities;
+package com.Megdana.Dance.with.Megdana.domain.dto.models;
 
-
+import com.Megdana.Dance.with.Megdana.domain.entities.Song;
 import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-@Entity
-@Table (name = "Dances")
-public class Dance extends BaseEntity{
-    @Column (nullable = false)
+public class DanceModel {
     private String name;
 
-    @ManyToOne
     private Song song;
 
-    @Enumerated
     private Region region;
 
-    @Enumerated
     private Measure measure;
 
-    @Column
-    private LocalDate learnedDate;
+    private Date learnedDate;
 
-    @Column
     private LocalDate lastPlayedDate;
 
-    public Dance() {
+    public DanceModel() {
     }
 
     public String getName() {
         return name;
     }
 
-    public Dance setName(String name) {
+    public DanceModel setName(String name) {
         this.name = name;
         return this;
     }
@@ -44,7 +36,7 @@ public class Dance extends BaseEntity{
         return song;
     }
 
-    public Dance setSong(Song song) {
+    public DanceModel setSong(Song song) {
         this.song = song;
         return this;
     }
@@ -53,7 +45,7 @@ public class Dance extends BaseEntity{
         return region;
     }
 
-    public Dance setRegion(Region region) {
+    public DanceModel setRegion(Region region) {
         this.region = region;
         return this;
     }
@@ -62,16 +54,16 @@ public class Dance extends BaseEntity{
         return measure;
     }
 
-    public Dance setMeasure(Measure measure) {
+    public DanceModel setMeasure(Measure measure) {
         this.measure = measure;
         return this;
     }
 
-    public LocalDate getLearnedDate() {
+    public Date getLearnedDate() {
         return learnedDate;
     }
 
-    public Dance setLearnedDate(LocalDate learnedDate) {
+    public DanceModel setLearnedDate(Date learnedDate) {
         this.learnedDate = learnedDate;
         return this;
     }
@@ -80,7 +72,7 @@ public class Dance extends BaseEntity{
         return lastPlayedDate;
     }
 
-    public Dance setLastPlayedDate(LocalDate lastPlayedDate) {
+    public DanceModel setLastPlayedDate(LocalDate lastPlayedDate) {
         this.lastPlayedDate = lastPlayedDate;
         return this;
     }

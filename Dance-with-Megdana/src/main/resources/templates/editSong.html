@@ -10,11 +10,24 @@
     <div class="d-flex justify-content-center ">
         <div class="row g-3">
             <form
-                    th:action="@{/songs/add}"
+                    th:action="@{/songs/editSong}"
                     th:method="POST"
-                    th:object="${songAddForm}">
+                    th:object="${songToEdit}">
 
                 <div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputSongID" class="col-form-label ">ID</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" name="id"
+                                   th:value="*{id}"
+                                   id="inputSongID"
+                                   class="form-control"
+                                   aria-describedby="userIDHelpInline"/>
+                        </div>
+                    </div>
+
                     <div class="col-auto">
                         <label for="inputName" class="col-form-label ">Name of the song:</label>
                     </div>
@@ -26,15 +39,6 @@
                                id="inputName"
                                class="form-control"
                                aria-describedby="nameHelpInline"/>
-                        <small id="nameError"
-                               th:if="${#fields.hasErrors('name')}"
-                               class="invalid-feedback bg-danger rounded">Song name length must be more than 5
-                            characters</small>
-
-                        <small id="songNameUniqueError"
-                               th:if="${#fields.hasErrors('name')}"
-                               class=" bg-danger rounded">Song name is already occupied</small>
-
                     </div>
                 </div>
 
@@ -74,7 +78,7 @@
 
 
                 <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary btn-block w-50" type="submit">Add song</button>
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit edits to the song</button>
                 </div>
 
             </form>

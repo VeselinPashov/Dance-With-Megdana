@@ -4,7 +4,7 @@ import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table (name = "Songs")
@@ -23,7 +23,7 @@ public class Song extends BaseEntity{
     private Measure measure;
 
     @Column
-    private Date lastPlayed;
+    private LocalDate lastPlayed;
 
     public Song() {
     }
@@ -64,11 +64,11 @@ public class Song extends BaseEntity{
         return this;
     }
 
-    public Date getLastPlayed() {
+    public LocalDate getLastPlayed() {
         return lastPlayed;
     }
 
-    public Song setLastPlayed(Date lastPlayed) {
+    public Song setLastPlayed(LocalDate lastPlayed) {
         this.lastPlayed = lastPlayed;
         return this;
     }

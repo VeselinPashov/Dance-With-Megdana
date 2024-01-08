@@ -3,12 +3,8 @@ package com.Megdana.Dance.with.Megdana.domain.dto.binding;
 
 import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.Date;
-
 
 public class SongAddForm {
 
