@@ -25,6 +25,9 @@ public class DanceAddForm {
 
     private LocalDate learnedDate;
 
+    @NotNull
+    private int duration; //in seconds
+
     public DanceAddForm() {
     }
 
@@ -70,6 +73,15 @@ public class DanceAddForm {
 
     public DanceAddForm setLearnedDate(LocalDate learnedDate) {
         this.learnedDate = learnedDate;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public DanceAddForm setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

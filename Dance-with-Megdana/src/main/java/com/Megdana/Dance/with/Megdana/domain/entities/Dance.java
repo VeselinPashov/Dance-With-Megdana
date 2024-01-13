@@ -28,6 +28,9 @@ public class Dance extends BaseEntity{
     @Column
     private LocalDate lastPlayedDate;
 
+    @Column
+    private int duration; //in seconds
+
     public Dance() {
     }
 
@@ -82,6 +85,15 @@ public class Dance extends BaseEntity{
 
     public Dance setLastPlayedDate(LocalDate lastPlayedDate) {
         this.lastPlayedDate = lastPlayedDate;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Dance setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

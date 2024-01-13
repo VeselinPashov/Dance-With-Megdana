@@ -20,6 +20,8 @@ public class SongAddForm {
 
     private Measure measure;
 
+    private int duration; //in seconds
+
     public SongAddForm() {
     }
 
@@ -56,6 +58,15 @@ public class SongAddForm {
 
     public SongAddForm setMeasure(Measure measure) {
         this.measure = measure;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public SongAddForm setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

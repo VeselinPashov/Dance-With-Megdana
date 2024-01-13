@@ -39,7 +39,7 @@ public class SongController extends BaseController{
         List<SongModelView> allSongs = this.songService.getAllSongs()
                 .stream()
                 .sorted(Comparator.comparing(SongModelView::getName))
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
         modelAndView.addObject("songList", allSongs);
         return super.view("songs", modelAndView);
     }

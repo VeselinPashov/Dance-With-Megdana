@@ -2,7 +2,7 @@ package com.Megdana.Dance.with.Megdana.domain.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -10,7 +10,7 @@ import java.util.List;
 public class Rehearsal extends  BaseEntity{
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @Column
     private Long durationInSeconds;
@@ -19,16 +19,16 @@ public class Rehearsal extends  BaseEntity{
     private String location;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
-    private List<Dance> dance;
+    private List<Dance> dances;
 
     public Rehearsal() {
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Rehearsal setDate(Date date) {
+    public Rehearsal setDate(LocalDate date) {
         this.date = date;
         return this;
     }
@@ -51,12 +51,12 @@ public class Rehearsal extends  BaseEntity{
         return this;
     }
 
-    public List<Dance> getDance() {
-        return dance;
+    public List<Dance> getDances() {
+        return dances;
     }
 
-    public Rehearsal setDance(List<Dance> dance) {
-        this.dance = dance;
+    public Rehearsal setDances(List<Dance> dances) {
+        this.dances = dances;
         return this;
     }
 }

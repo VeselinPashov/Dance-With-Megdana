@@ -25,6 +25,9 @@ public class Song extends BaseEntity{
     @Column
     private LocalDate lastPlayed;
 
+    @Column
+    private int duration; //in seconds
+
     public Song() {
     }
 

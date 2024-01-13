@@ -21,6 +21,8 @@ public class DanceModelView {
 
     private LocalDate learnedDate;
 
+    private int duration; //in seconds
+
     public DanceModelView() {
     }
 
@@ -75,6 +77,15 @@ public class DanceModelView {
 
     public DanceModelView setLearnedDate(LocalDate learnedDate) {
         this.learnedDate = learnedDate;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public DanceModelView setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

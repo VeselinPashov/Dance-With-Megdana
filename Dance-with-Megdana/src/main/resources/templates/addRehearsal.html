@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+    <header th:replace="~{/fragments/navigation}">
+    </header>
+    <form
+          th:action="@{/rehearsals/add}"
+          th:method="POST"
+          th:object="${rehearsalAddForm}">
+        <div>
+            <div class="col-auto">
+                <label for="inputDate" class="col-form-label ">Date of rehearsal:</label>
+            </div>
+            <div class="col-auto">
+                <input name="date" required
+                       th:value="*{date}"
+                       type="date"
+                       id="inputDate"/>
+            </div>
+
+            <div class="col-auto">
+                <label for="inputLocation" class="col-form-label ">Location:</label>
+            </div>
+            <div class="col-auto">
+                <input name="location" required
+                       th:value="*{location}"
+                       minlength="5" maxlength="20"
+                       type="text"
+                       id="inputLocation"
+                       class="form-control"
+                       aria-describedby="locationHelpInline"/>
+            </div>
+
+            <p>Songs:
+                <select th:field="*{dances}" multiple="multiple">
+                    <option th:each="dance : ${danceList}" th:value="${dance.id}" th:text="${dance.name}">Dance</option>
+                </select>
+            </p>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            <button class="btn btn-primary btn-block w-50" type="submit">Add rehearsal</button>
+        </div>
+    </form>
+
+</body>
+<footer th:replace="~{fragments/footer}"></footer>
+</html>
