@@ -86,7 +86,7 @@ public class SongController extends BaseController{
     }
 
     @PostMapping("/editSong")
-    public ModelAndView postEditUser (@ModelAttribute SongModelView songModelView,
+    public ModelAndView postEditSong (@ModelAttribute SongModelView songModelView,
                                       ModelAndView modelAndView) {
         this.songService.editSong(songModelView);
         return redirect("/songs/all");

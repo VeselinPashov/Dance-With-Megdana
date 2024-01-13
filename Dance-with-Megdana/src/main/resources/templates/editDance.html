@@ -1,0 +1,91 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <h1 class="border-bottom">Add new song</h1>
+    <header th:replace="~{/fragments/navigation}"></header>
+    <div class="d-flex justify-content-center ">
+        <div class="row g-3">
+            <form
+                    th:action="@{/dances/editDance}"
+                    th:method="POST"
+                    th:object="${danceToEdit}">
+
+                <div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputDanceID" class="col-form-label ">ID</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" name="id"
+                                   th:value="*{id}"
+                                   id="inputDanceID"
+                                   class="form-control"
+                                   aria-describedby="userIDHelpInline"/>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <label for="inputName" class="col-form-label ">Name of the dance:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="name" required
+                               th:value="*{name}"
+                               minlength="5" maxlength="20"
+                               type="text"
+                               id="inputName"
+                               class="form-control"
+                               aria-describedby="nameHelpInline"/>
+                    </div>
+                </div>
+
+                <div>
+                    <select th:field="*{song}">
+                        <option value="">Select a song</option>
+                        <option th:each="song : ${songList}" th:value="${song.id}" th:text="${song.name}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <select th:field="*{region}">
+                        <option value="">Select region</option>
+                        <option th:each="region : ${regions}" th:value="${region}" th:text="${region}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <select th:field="*{measure}">
+                        <option value="">Select measure</option>
+                        <option th:each="measure : ${measures}" th:value="${measure}" th:text="${measure}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <div class="col-auto">
+                        <label for="inputLearnedDate" class="col-form-label ">When the dance was first learned:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="learnedDate" required
+                               th:value="*{learnedDate}"
+                               type="date"
+                               id="inputLearnedDate"/>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit edits to the song</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{/fragments/footer}"></footer>
+
+</body>
+</html>

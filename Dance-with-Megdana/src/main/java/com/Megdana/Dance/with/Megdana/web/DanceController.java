@@ -1,6 +1,9 @@
 package com.Megdana.Dance.with.Megdana.web;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.DanceAddForm;
+import com.Megdana.Dance.with.Megdana.domain.dto.view.DanceModelView;
+import com.Megdana.Dance.with.Megdana.domain.dto.view.SongModelView;
+import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
 import com.Megdana.Dance.with.Megdana.repositories.DanceRepository;
 import com.Megdana.Dance.with.Megdana.repositories.SongRepository;
 import com.Megdana.Dance.with.Megdana.services.DanceService;
@@ -9,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/dances")
@@ -29,9 +34,7 @@ public class DanceController extends BaseController{
 
     @RequestMapping("/add")
     public ModelAndView getAddDance (ModelAndView modelAndView) {
-
-        ModelAndView newModelAndView = this.danceService.listAllDances(modelAndView);
-        return super.view("addDance", newModelAndView);
+        return super.view("addDance", this.danceService.listAllSongsAndRegions(modelAndView));
     }
 
     @PostMapping("/add")
@@ -43,8 +46,7 @@ public class DanceController extends BaseController{
         }
 
         if(bindingResult.hasErrors()) {
-            ModelAndView newModelAndView = this.danceService.listAllDances(modelAndView);
-            return super.view("addDance", newModelAndView.addObject(danceAddForm));
+            return super.view("addDance", this.danceService.listAllSongsAndRegions(modelAndView.addObject(danceAddForm)));
         }
         this.danceService.saveNewDance(danceAddForm);
         return redirect("/dances/all");
@@ -54,6 +56,22 @@ public class DanceController extends BaseController{
     public ModelAndView getDeleteDance (@PathVariable Long id,
                                          ModelAndView modelAndView) {
         this.danceRepository.deleteById(id);
+        return redirect("/dances/all");
+    }
+
+    @RequestMapping("/editDance/{id}")
+    public ModelAndView getEditDance (@PathVariable Long id,
+                                      ModelAndView modelAndView) {
+        Optional<Dance> danceToEdit = this.danceRepository.findById(id);
+        danceToEdit.ifPresent(dance -> modelAndView.addObject("danceToEdit", dance));
+
+        return super.view("editDance", this.danceService.listAllSongsAndRegions(modelAndView));
+    }
+
+    @PostMapping("/editDance")
+    public ModelAndView postEditDance (@ModelAttribute DanceModelView danceModelView,
+                                      ModelAndView modelAndView) {
+        this.danceService.editDance(danceModelView);
         return redirect("/dances/all");
     }
 
