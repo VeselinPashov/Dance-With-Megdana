@@ -1,41 +1,45 @@
-package com.Megdana.Dance.with.Megdana.domain.dto.binding;
+package com.Megdana.Dance.with.Megdana.domain.dto.view;
 
 import com.Megdana.Dance.with.Megdana.domain.entities.Song;
 import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-public class DanceAddForm {
+public class DanceModelView {
 
-    @NotNull
-    @Size(min = 5, message = "Name of the dance should be at least 5 letters")
+    private Long id;
+
     private String name;
 
-    @NotNull
     private Song song;
 
-    @NotNull
     private Region region;
 
-    @NotNull
     private Measure measure;
 
     private LocalDate learnedDate;
 
-    @NotNull
     private int duration; //in seconds
 
-    public DanceAddForm() {
+    public DanceModelView() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public DanceModelView setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public DanceAddForm setName(String name) {
+    public DanceModelView setName(String name) {
         this.name = name;
         return this;
     }
@@ -44,7 +48,7 @@ public class DanceAddForm {
         return song;
     }
 
-    public DanceAddForm setSong(Song song) {
+    public DanceModelView setSong(Song song) {
         this.song = song;
         return this;
     }
@@ -53,7 +57,7 @@ public class DanceAddForm {
         return region;
     }
 
-    public DanceAddForm setRegion(Region region) {
+    public DanceModelView setRegion(Region region) {
         this.region = region;
         return this;
     }
@@ -62,7 +66,7 @@ public class DanceAddForm {
         return measure;
     }
 
-    public DanceAddForm setMeasure(Measure measure) {
+    public DanceModelView setMeasure(Measure measure) {
         this.measure = measure;
         return this;
     }
@@ -71,7 +75,7 @@ public class DanceAddForm {
         return learnedDate;
     }
 
-    public DanceAddForm setLearnedDate(LocalDate learnedDate) {
+    public DanceModelView setLearnedDate(LocalDate learnedDate) {
         this.learnedDate = learnedDate;
         return this;
     }
@@ -80,7 +84,7 @@ public class DanceAddForm {
         return duration;
     }
 
-    public DanceAddForm setDuration(int duration) {
+    public DanceModelView setDuration(int duration) {
         this.duration = duration;
         return this;
     }

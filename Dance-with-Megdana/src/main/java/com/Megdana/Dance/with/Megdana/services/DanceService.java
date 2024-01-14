@@ -1,6 +1,7 @@
 package com.Megdana.Dance.with.Megdana.services;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.DanceAddForm;
+import com.Megdana.Dance.with.Megdana.domain.dto.view.DanceModelView;
 import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
 import com.Megdana.Dance.with.Megdana.domain.enums.Measure;
 import com.Megdana.Dance.with.Megdana.domain.enums.Region;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class DanceService {
@@ -29,13 +31,25 @@ public class DanceService {
 
     public void saveNewDance(DanceAddForm danceAddForm) {
         danceAddForm.setLearnedDate(LocalDate.now());
+        danceAddForm.setDuration(danceAddForm.getSong().getDuration());
         this.danceRepository.saveAndFlush(this.modelMapper.map(danceAddForm, Dance.class));
     }
 
-    public ModelAndView listAllDances (ModelAndView modelAndView) {
+    public ModelAndView listAllSongsAndRegions(ModelAndView modelAndView) {
         modelAndView.addObject("songList", this.songRepository.findAll());
         modelAndView.addObject("regions", Arrays.asList(Region.values()));
         modelAndView.addObject("measures", Arrays.asList(Measure.values()));
         return  modelAndView;
+    }
+
+    public void editDance(DanceModelView danceModelView) {
+        Optional<Dance> danceToEdit = this.danceRepository.findById(danceModelView.getId());
+        danceToEdit.ifPresent(dance -> {dance.setName(danceModelView.getName());
+                                        dance.setMeasure(danceModelView.getMeasure());
+                                        dance.setSong(danceModelView.getSong());
+                                        dance.setRegion(danceModelView.getRegion());
+                                        dance.setLearnedDate(danceModelView.getLearnedDate());
+                                        dance.setDuration((danceModelView.getSong().getDuration()));
+                                        this.danceRepository.saveAndFlush(dance);});
     }
 }

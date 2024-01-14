@@ -20,6 +20,8 @@ public class DanceModel {
 
     private LocalDate lastPlayedDate;
 
+    private int duration; //in seconds
+
     public DanceModel() {
     }
 
@@ -74,6 +76,15 @@ public class DanceModel {
 
     public DanceModel setLastPlayedDate(LocalDate lastPlayedDate) {
         this.lastPlayedDate = lastPlayedDate;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public DanceModel setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

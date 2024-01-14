@@ -19,6 +19,8 @@ public class SongModelView {
 
     private Date lastPlayed;
 
+    private int duration; //in seconds
+
     public SongModelView() {
     }
 
@@ -73,6 +75,15 @@ public class SongModelView {
 
     public SongModelView setLastPlayed(Date lastPlayed) {
         this.lastPlayed = lastPlayed;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public SongModelView setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

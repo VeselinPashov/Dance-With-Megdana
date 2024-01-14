@@ -25,6 +25,9 @@ public class Song extends BaseEntity{
     @Column
     private LocalDate lastPlayed;
 
+    @Column
+    private int duration; //in seconds
+
     public Song() {
     }
 
@@ -70,6 +73,15 @@ public class Song extends BaseEntity{
 
     public Song setLastPlayed(LocalDate lastPlayed) {
         this.lastPlayed = lastPlayed;
+        return this;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Song setDuration(int duration) {
+        this.duration = duration;
         return this;
     }
 }

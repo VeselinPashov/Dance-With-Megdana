@@ -10,26 +10,26 @@
     <div class="d-flex justify-content-center ">
         <div class="row g-3">
             <form
-                    th:action="@{/songs/editSong}"
+                    th:action="@{/dances/editDance}"
                     th:method="POST"
-                    th:object="${songToEdit}">
+                    th:object="${danceToEdit}">
 
                 <div>
                     <div>
                         <div class="col-auto">
-                            <label for="inputSongID" class="col-form-label ">ID</label>
+                            <label for="inputDanceID" class="col-form-label ">ID</label>
                         </div>
                         <div class="col-auto">
                             <input type="hidden" name="id"
                                    th:value="*{id}"
-                                   id="inputSongID"
+                                   id="inputDanceID"
                                    class="form-control"
                                    aria-describedby="userIDHelpInline"/>
                         </div>
                     </div>
 
                     <div class="col-auto">
-                        <label for="inputName" class="col-form-label ">Name of the song:</label>
+                        <label for="inputName" class="col-form-label ">Name of the dance:</label>
                     </div>
                     <div class="col-auto">
                         <input name="name" required
@@ -42,24 +42,11 @@
                     </div>
                 </div>
 
-
                 <div>
-                    <div class="col-auto">
-                        <label for="inputPerformedBy" class="col-form-label ">Who is performing this song</label>
-                    </div>
-                    <div class="col-auto">
-                        <input name="performedBy"
-                               th:value="*{performedBy}"
-                               required minlength="5" maxlength="20"
-                               type="text"
-                               id="inputPerformedBy"
-                               class="form-control"
-                               aria-describedby="performedByHelpInline">
-                        <small id="performedByError"
-                               th:if="${#fields.hasErrors('performedBy')}"
-                               class="invalid-feedback  form-text bg-danger rounded">Artist name length must be more than
-                            5 characters</small>
-                    </div>
+                    <select th:field="*{song}">
+                        <option value="">Select a song</option>
+                        <option th:each="song : ${songList}" th:value="${song.id}" th:text="${song.name}"></option>
+                    </select>
                 </div>
 
                 <div>
@@ -78,20 +65,13 @@
 
                 <div>
                     <div class="col-auto">
-                        <label for="inputDuration" class="col-form-label ">What is the duration of the song</label>
+                        <label for="inputLearnedDate" class="col-form-label ">When the dance was first learned:</label>
                     </div>
                     <div class="col-auto">
-                        <input name="duration"
-                               th:value="*{duration}"
-                               required minlength="5" maxlength="20"
-                               type="number"
-                               id="inputDuration"
-                               class="form-control"
-                               aria-describedby="performedByHelpInline">
-                        <small id="durationError"
-                               th:if="${#fields.hasErrors('performedBy')}"
-                               class="invalid-feedback  form-text bg-danger rounded">Artist name length must be more than
-                            5 characters</small>
+                        <input name="learnedDate" required
+                               th:value="*{learnedDate}"
+                               type="date"
+                               id="inputLearnedDate"/>
                     </div>
                 </div>
 

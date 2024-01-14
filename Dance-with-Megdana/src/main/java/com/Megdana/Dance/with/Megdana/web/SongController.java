@@ -36,10 +36,14 @@ public class SongController extends BaseController{
 
     @RequestMapping ("/all")
     public ModelAndView getAllSongs (ModelAndView modelAndView) {
+        for (Song song : this.songRepository.findAll()) {
+            song.setDuration(100);
+        }
+
         List<SongModelView> allSongs = this.songService.getAllSongs()
                 .stream()
                 .sorted(Comparator.comparing(SongModelView::getName))
-                .collect(Collectors.toList());;
+                .collect(Collectors.toList());
         modelAndView.addObject("songList", allSongs);
         return super.view("songs", modelAndView);
     }
@@ -86,7 +90,7 @@ public class SongController extends BaseController{
     }
 
     @PostMapping("/editSong")
-    public ModelAndView postEditUser (@ModelAttribute SongModelView songModelView,
+    public ModelAndView postEditSong (@ModelAttribute SongModelView songModelView,
                                       ModelAndView modelAndView) {
         this.songService.editSong(songModelView);
         return redirect("/songs/all");

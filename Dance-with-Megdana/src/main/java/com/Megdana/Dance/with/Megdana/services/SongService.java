@@ -47,6 +47,7 @@ public class SongService {
             songToEdit.get().setPerformedBy(songModelView.getPerformedBy());
             songToEdit.get().setRegion(songModelView.getRegion());
             songToEdit.get().setMeasure(songModelView.getMeasure());
+            songToEdit.get().setDuration(songModelView.getDuration());
             this.songRepository.saveAndFlush(songToEdit.get());
         }
 

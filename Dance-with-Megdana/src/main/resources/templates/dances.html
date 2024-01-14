@@ -19,6 +19,7 @@
         <th>Measure</th>
         <th>Learned on</th>
         <th>Last practiced on</th>
+        <th>Duration</th>
         <th th:if="${@loggedUser.isEditor()}">Actions</th>
     </tr>
     </thead>
@@ -30,6 +31,7 @@
         <td th:text="${dance.measure}"></td>
         <td th:text="${#temporals.format(dance.learnedDate, 'dd/MM/yyyy')}"></td>
         <td th:text="${#temporals.format(dance.lastPlayedDate, 'dd/MM/yyyy')}"></td>
+        <td th:text="${dance.duration}"></td>
         <td th:if="${@loggedUser.isEditor()}">
             <a th:href="@{editDance/{id}(id=${dance.id})}">Edit</a>
             <a th:href="@{deleteDance/{id}(id=${dance.id})}">Delete</a>
