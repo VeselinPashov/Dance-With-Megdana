@@ -8,3 +8,5 @@ Time spend:
  -Adding functionality admin to edit users (1.5+3+2+..) - 9,5h
  -Implementing song functionality. Song list+add Song (2h) edit and delete song (2h) - 4h
  -Implementing Dance dunctionality (Add, edit, delete) - 3h
+ -Implementing Rehearsal functionality Add and delete (2.5h) - 2.5h
+ -Adding duration for Song and Dance (and for all their CRUD) - 1.5h
