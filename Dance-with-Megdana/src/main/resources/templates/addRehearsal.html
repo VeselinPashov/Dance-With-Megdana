@@ -34,7 +34,7 @@
                        aria-describedby="locationHelpInline"/>
             </div>
 
-            <p>Songs:
+            <p>Dances:
                 <select th:field="*{dances}" multiple="multiple">
                     <option th:each="dance : ${danceList}" th:value="${dance.id}" th:text="${dance.name}">Dance</option>
                 </select>

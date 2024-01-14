@@ -20,6 +20,8 @@ public class RehearsalAddForm {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private List<Dance> dances;
 
+    private int durationInSeconds;
+
     public RehearsalAddForm() {
     }
 
@@ -47,6 +49,15 @@ public class RehearsalAddForm {
 
     public RehearsalAddForm setDances(List<Dance> dances) {
         this.dances = dances;
+        return this;
+    }
+
+    public int getDurationInSeconds() {
+        return durationInSeconds;
+    }
+
+    public RehearsalAddForm setDurationInSeconds(int durationInSeconds) {
+        this.durationInSeconds = durationInSeconds;
         return this;
     }
 }

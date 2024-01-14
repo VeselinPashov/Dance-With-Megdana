@@ -1,17 +1,22 @@
 package com.Megdana.Dance.with.Megdana.web;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.RehearsalAddForm;
+import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
 import com.Megdana.Dance.with.Megdana.domain.entities.Rehearsal;
 import com.Megdana.Dance.with.Megdana.repositories.DanceRepository;
 import com.Megdana.Dance.with.Megdana.repositories.RehearsalRepository;
 import com.Megdana.Dance.with.Megdana.repositories.SongRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("rehearsals")
@@ -39,9 +44,24 @@ public class RehearsalController extends BaseController{
     }
 
     @PostMapping ("/add")
-    public ModelAndView postAddRehearsal (@ModelAttribute RehearsalAddForm rehearsalAddForm,
-                                            ModelAndView modelAndView) {
+    public ModelAndView postAddRehearsal (@Validated RehearsalAddForm rehearsalAddForm,
+                                          BindingResult bindingResult,
+                                          ModelAndView modelAndView) {
+        if (this.rehearsalRepository.findByDate(rehearsalAddForm.getDate()).isPresent()) {
+            bindingResult.rejectValue("Date", null, "There is already another rehearsal started on the same date");
+        }
 
+        if(bindingResult.hasErrors()) {
+            modelAndView.addObject("rehearsalList", this.rehearsalRepository.findAll());
+            modelAndView.addObject(rehearsalAddForm);
+            return super.view("addRehearsal", modelAndView);
+        }
+
+        int danceDuration = rehearsalAddForm.getDances()
+                                            .stream()
+                                            .mapToInt(Dance::getDuration)
+                                            .sum();
+        rehearsalAddForm.setDurationInSeconds(danceDuration);
         this.rehearsalRepository.saveAndFlush(this.modelMapper.map(rehearsalAddForm, Rehearsal.class));
         return redirect("/rehearsals/");
     }

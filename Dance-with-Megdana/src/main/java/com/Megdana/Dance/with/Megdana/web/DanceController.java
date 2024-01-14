@@ -45,7 +45,8 @@ public class DanceController extends BaseController{
         }
 
         if(bindingResult.hasErrors()) {
-            return super.view("addDance", this.danceService.listAllSongsAndRegions(modelAndView.addObject(danceAddForm)));
+            return super.view("addDance",
+                    this.danceService.listAllSongsAndRegions(modelAndView.addObject(danceAddForm)));
         }
         this.danceService.saveNewDance(danceAddForm);
         return redirect("/dances/all");

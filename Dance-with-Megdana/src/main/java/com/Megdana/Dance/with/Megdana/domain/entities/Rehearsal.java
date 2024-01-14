@@ -13,7 +13,7 @@ public class Rehearsal extends  BaseEntity{
     private LocalDate date;
 
     @Column
-    private Long durationInSeconds;
+    private int durationInSeconds;
 
     @Column
     private String location;
@@ -33,11 +33,11 @@ public class Rehearsal extends  BaseEntity{
         return this;
     }
 
-    public Long getDurationInSeconds() {
+    public int getDurationInSeconds() {
         return durationInSeconds;
     }
 
-    public Rehearsal setDurationInSeconds(Long durationInSeconds) {
+    public Rehearsal setDurationInSeconds(int durationInSeconds) {
         this.durationInSeconds = durationInSeconds;
         return this;
     }
