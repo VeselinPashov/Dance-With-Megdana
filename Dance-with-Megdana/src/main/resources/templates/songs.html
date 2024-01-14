@@ -18,6 +18,7 @@
         <th>Region</th>
         <th>Measure</th>
         <th>Last played on</th>
+        <th>Duration</th>
         <th th:if="${@loggedUser.isEditor()}">Actions</th>
     </tr>
     </thead>
@@ -28,6 +29,7 @@
         <td th:text="${song.region}"></td>
         <td th:text="${song.measure}"></td>
         <td th:text="${song.lastPlayed}"></td>
+        <td th:text="${song.duration}"></td>
         <td th:if="${@loggedUser.isEditor()}">
             <a th:href="@{editSong/{id}(id=${song.id})}">Edit</a>
             <a th:href="@{deleteSong/{id}(id=${song.id})}">Delete</a>

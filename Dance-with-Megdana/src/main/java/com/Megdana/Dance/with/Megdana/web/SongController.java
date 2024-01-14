@@ -36,6 +36,10 @@ public class SongController extends BaseController{
 
     @RequestMapping ("/all")
     public ModelAndView getAllSongs (ModelAndView modelAndView) {
+        for (Song song : this.songRepository.findAll()) {
+            song.setDuration(100);
+        }
+
         List<SongModelView> allSongs = this.songService.getAllSongs()
                 .stream()
                 .sorted(Comparator.comparing(SongModelView::getName))

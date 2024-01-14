@@ -75,4 +75,13 @@ public class Song extends BaseEntity{
         this.lastPlayed = lastPlayed;
         return this;
     }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Song setDuration(int duration) {
+        this.duration = duration;
+        return this;
+    }
 }
