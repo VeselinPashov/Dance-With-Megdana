@@ -31,6 +31,7 @@ public class DanceService {
 
     public void saveNewDance(DanceAddForm danceAddForm) {
         danceAddForm.setLearnedDate(LocalDate.now());
+        danceAddForm.setDuration(danceAddForm.getSong().getDuration());
         this.danceRepository.saveAndFlush(this.modelMapper.map(danceAddForm, Dance.class));
     }
 
@@ -48,6 +49,7 @@ public class DanceService {
                                         dance.setSong(danceModelView.getSong());
                                         dance.setRegion(danceModelView.getRegion());
                                         dance.setLearnedDate(danceModelView.getLearnedDate());
+                                        dance.setDuration((danceModelView.getSong().getDuration()));
                                         this.danceRepository.saveAndFlush(dance);});
     }
 }
