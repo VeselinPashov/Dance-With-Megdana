@@ -1,11 +1,12 @@
 package com.Megdana.Dance.with.Megdana.web;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.RehearsalAddForm;
-import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
+import com.Megdana.Dance.with.Megdana.domain.dto.models.RehearsalModel;
 import com.Megdana.Dance.with.Megdana.domain.entities.Rehearsal;
 import com.Megdana.Dance.with.Megdana.repositories.DanceRepository;
 import com.Megdana.Dance.with.Megdana.repositories.RehearsalRepository;
 import com.Megdana.Dance.with.Megdana.repositories.SongRepository;
+import com.Megdana.Dance.with.Megdana.services.RehearsalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,17 +17,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.stream.Stream;
+import java.util.Optional;
+
 
 @Controller
 @RequestMapping("rehearsals")
 public class RehearsalController extends BaseController{
     private final RehearsalRepository rehearsalRepository;
+    private final RehearsalService rehearsalService;
     private final DanceRepository danceRepository;
     private final ModelMapper modelMapper;
 
-    public RehearsalController(RehearsalRepository rehearsalRepository, SongRepository songRepository, DanceRepository danceRepository, ModelMapper modelMapper) {
+    public RehearsalController(RehearsalRepository rehearsalRepository, SongRepository songRepository, RehearsalService rehearsalService, DanceRepository danceRepository, ModelMapper modelMapper) {
         this.rehearsalRepository = rehearsalRepository;
+        this.rehearsalService = rehearsalService;
         this.danceRepository = danceRepository;
         this.modelMapper = modelMapper;
     }
@@ -57,12 +61,7 @@ public class RehearsalController extends BaseController{
             return super.view("addRehearsal", modelAndView);
         }
 
-        int danceDuration = rehearsalAddForm.getDances()
-                                            .stream()
-                                            .mapToInt(Dance::getDuration)
-                                            .sum();
-        rehearsalAddForm.setDurationInSeconds(danceDuration);
-        this.rehearsalRepository.saveAndFlush(this.modelMapper.map(rehearsalAddForm, Rehearsal.class));
+        this.rehearsalService.saveNewRehearsal(rehearsalAddForm);
         return redirect("/rehearsals/");
     }
 
@@ -70,6 +69,21 @@ public class RehearsalController extends BaseController{
     public ModelAndView getDeleteRehearsal (@PathVariable Long id,
                                         ModelAndView modelAndView) {
         this.rehearsalRepository.deleteById(id);
+        return redirect("/rehearsals/");
+    }
+
+    @RequestMapping("/editRehearsal/{id}")
+    public ModelAndView getEditRehearsal (@PathVariable Long id,
+                                          ModelAndView modelAndView) {
+        Optional<Rehearsal> rehearsalToEdit = this.rehearsalRepository.findById(id);
+        rehearsalToEdit.ifPresent(rehearsal -> modelAndView.addObject("rehearsalToEdit", rehearsal));
+        return super.view("editRehearsal", modelAndView);
+    }
+
+    @PostMapping("/editRehearsal")
+    public ModelAndView postEditRehearsal (@ModelAttribute RehearsalModel rehearsalModel,
+                                           ModelAndView modelAndView) {
+        this.rehearsalService.editRehearsal(rehearsalModel);
         return redirect("/rehearsals/");
     }
 

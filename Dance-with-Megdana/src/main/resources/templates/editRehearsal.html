@@ -1,0 +1,69 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <h1 class="border-bottom">AEdit Rehearsal</h1>
+    <header th:replace="~{/fragments/navigation}"></header>
+    <div class="d-flex justify-content-center ">
+        <div class="row g-3">
+            <form
+                    th:action="@{/rehearsals/editRehearsal}"
+                    th:method="POST"
+                    th:object="${rehearsalToEdit}">
+
+                <div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputRehearsalID" class="col-form-label ">ID</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" name="id"
+                                   th:value="*{id}"
+                                   id="inputRehearsalID"
+                                   class="form-control"
+                                   aria-describedby="userIDHelpInline"/>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <label for="inputDate" class="col-form-label ">When the dance was first learned:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="date" required
+                               th:value="*{date}"
+                               type="date"
+                               id="inputDate"/>
+                    </div>
+
+                    <div class="col-auto">
+                        <label for="inputLocation" class="col-form-label ">Location of the rehearsal:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input name="location" required
+                        th:value="*{location}"
+                        minlength="5" maxlength="20"
+                        type="text"
+                        id="inputLocation"
+                        class="form-control"
+                        aria-describedby="nameHelpInline"/>
+                    </div>
+
+
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit edits to the rehearsal</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{/fragments/footer}"></footer>
+
+</body>
+</html>
