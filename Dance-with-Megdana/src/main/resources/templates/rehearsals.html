@@ -35,6 +35,8 @@
         <td th:if="${@loggedUser.isEditor()}">
             <a th:href="@{editRehearsal/{id}(id=${rehearsal.id})}">Edit</a>
             <a th:href="@{deleteRehearsal/{id}(id=${rehearsal.id})}">Delete</a>
+            <a th:href="@{rehearsalDetails/{id}(id=${rehearsal.id})}">Details</a>
+
         </td>
     </tr>
     </tbody>

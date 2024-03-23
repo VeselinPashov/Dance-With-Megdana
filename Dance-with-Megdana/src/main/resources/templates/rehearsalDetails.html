@@ -1,0 +1,50 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{/fragments/head}">
+</head>
+<body>
+<header th:replace="~{/fragments/navigation}">
+</header>
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+                <div class="profile-card p-3 py-4" th:object="${rehearsalDetails}">
+                    <div class="text-center"><img src="/images/song.jfif" width="150"></div>
+
+                    <div class="text-center mt-3">
+
+
+                        <h5 class="mt-4 mb-0">Date</h5>
+                        <span th:text="*{date}">UI/UX Designer</span>
+
+                        <h5 class="mt-4 mb-0">Duration in seconds</h5>
+                        <span th:text="*{durationInSeconds}">UI/UX Designer</span>
+
+                        <h5 class="mt-2 mb-0">Location</h5>
+                        <span th:text="*{location}">UI/UX Designer</span>
+
+                        <div th:if="${@loggedUser.isEditor()}">
+                            <a th:href="@{addDanceToRehearsal/{id}(id=${rehearsalDetails.id})}">Add new Dance</a>
+                        </div>
+
+                        <h5 class="mt-4 mb-0">List of dances in this rehearsal</h5>
+                        <ul th:each="dance : ${rehearsalDetails.dances}">
+                            <li>
+                                <a th:text="${dance.name}">Name</a>
+                            </li>
+                        </ul>
+
+                        <div class="buttons">
+                            <a class="btn btn-outline-primary px-4" th:href="@{/}">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:replace="~{fragments/footer}"></footer>
+</html>
