@@ -2,6 +2,7 @@ package com.Megdana.Dance.with.Megdana.web;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.RehearsalAddForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.models.RehearsalModel;
+import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
 import com.Megdana.Dance.with.Megdana.domain.entities.Rehearsal;
 import com.Megdana.Dance.with.Megdana.repositories.DanceRepository;
 import com.Megdana.Dance.with.Megdana.repositories.RehearsalRepository;
@@ -14,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -88,8 +90,29 @@ public class RehearsalController extends BaseController{
     public ModelAndView getRehearsalDetails (@PathVariable Long id,
                                              ModelAndView modelAndView) {
         Optional<Rehearsal> rehearsalToShow = this.rehearsalRepository.findById(id);
-        rehearsalToShow.ifPresent(rehearsal -> modelAndView.addObject("rehearsalDetails", rehearsal));
+
+        rehearsalToShow.ifPresent(rehearsal -> {modelAndView.addObject("rehearsalDetails", rehearsal);
+                                                 modelAndView.addObject("danceList", rehearsal.getDances());}
+                                                );
         return super.view("rehearsalDetails", modelAndView);
+    }
+
+    @RequestMapping("/rehearsalDetails/deleteDanceFromRehearsal/{danceId}&{rehearsalId}")
+    public ModelAndView postDeleteDanceFromRehearsal (@PathVariable Long danceId,
+                                                      @PathVariable Long rehearsalId,
+                                                      ModelAndView modelAndView) {
+        Optional<Rehearsal> currentRehearsal = this.rehearsalRepository.findById(rehearsalId);
+        Optional<Dance> danceToRemove = this.danceRepository.findById(danceId);
+        if (currentRehearsal.isPresent() && danceToRemove.isPresent()) {
+            Rehearsal rehearsal = currentRehearsal.get();
+            List<Dance> dances = rehearsal.getDances();
+            dances.remove(danceToRemove.get());
+            rehearsal.setDances(dances);
+
+            modelAndView.addObject("rehearsalDetails", rehearsal);
+        }
+
+        return redirect("/rehearsals/rehearsalDetails/"+rehearsalId);
     }
 
     @ModelAttribute ("rehearsalAddForm")
