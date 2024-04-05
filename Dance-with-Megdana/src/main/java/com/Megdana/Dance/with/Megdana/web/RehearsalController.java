@@ -101,18 +101,16 @@ public class RehearsalController extends BaseController{
     public ModelAndView postDeleteDanceFromRehearsal (@PathVariable Long danceId,
                                                       @PathVariable Long rehearsalId,
                                                       ModelAndView modelAndView) {
-        Optional<Rehearsal> currentRehearsal = this.rehearsalRepository.findById(rehearsalId);
-        Optional<Dance> danceToRemove = this.danceRepository.findById(danceId);
-        if (currentRehearsal.isPresent() && danceToRemove.isPresent()) {
-            Rehearsal rehearsal = currentRehearsal.get();
-            List<Dance> dances = rehearsal.getDances();
-            dances.remove(danceToRemove.get());
-            rehearsal.setDances(dances);
-
-            modelAndView.addObject("rehearsalDetails", rehearsal);
-        }
+        Rehearsal rehearsal = this.rehearsalService.removeDanceFromRehearsal(rehearsalId, danceId);
+        modelAndView.addObject("rehearsalDetails", rehearsal);
 
         return redirect("/rehearsals/rehearsalDetails/"+rehearsalId);
+    }
+
+    @RequestMapping("rehearsalDetails/addDanceToRehearsal/{rehearsalId")
+    public ModelAndView getAddDanceToRehearsal (@PathVariable Long rehearsalIs,
+                                                ModelAndView modelAndView) {
+
     }
 
     @ModelAttribute ("rehearsalAddForm")
