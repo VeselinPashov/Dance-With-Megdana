@@ -9,6 +9,9 @@
         <module name="Dance-with-Megdana" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Dance-with-Megdana" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

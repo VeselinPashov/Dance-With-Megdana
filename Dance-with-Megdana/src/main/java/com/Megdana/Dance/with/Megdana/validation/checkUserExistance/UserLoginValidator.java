@@ -8,6 +8,8 @@ import com.Megdana.Dance.with.Megdana.services.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.rmi.NoSuchObjectException;
+
 public class UserLoginValidator implements ConstraintValidator<ValidateLoginForm, UserLoginForm> {
 
     private final UserService userService;
@@ -25,7 +27,7 @@ public class UserLoginValidator implements ConstraintValidator<ValidateLoginForm
     public boolean isValid(UserLoginForm userLoginModel, ConstraintValidatorContext constraintValidatorContext) {
         UserModel user = this.userService.findByUsername(userLoginModel.getUsername());
 
-        return user.getId() != null
+        return user.getId() != 0
                 && user.getPassword()
                 .equals(userLoginModel.getPassword());
     }

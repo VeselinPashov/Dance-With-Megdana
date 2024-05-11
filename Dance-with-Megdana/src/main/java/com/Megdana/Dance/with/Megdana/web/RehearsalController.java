@@ -107,11 +107,11 @@ public class RehearsalController extends BaseController{
         return redirect("/rehearsals/rehearsalDetails/"+rehearsalId);
     }
 
-    @RequestMapping("rehearsalDetails/addDanceToRehearsal/{rehearsalId")
-    public ModelAndView getAddDanceToRehearsal (@PathVariable Long rehearsalIs,
-                                                ModelAndView modelAndView) {
-
-    }
+//    @RequestMapping("rehearsalDetails/addDanceToRehearsal/{rehearsalId")
+//    public ModelAndView getAddDanceToRehearsal (@PathVariable Long rehearsalIs,
+//                                                ModelAndView modelAndView) {
+//
+//    }
 
     @ModelAttribute ("rehearsalAddForm")
     public RehearsalAddForm rehearsalAddForm() {

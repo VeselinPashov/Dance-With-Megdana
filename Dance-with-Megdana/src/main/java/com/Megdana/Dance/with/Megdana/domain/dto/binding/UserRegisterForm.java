@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 public class UserRegisterForm {
 
     @NotNull
-    @Size(min = 10, message = "length bro")
+    @Size(min = 5, message = "length bro")
     private String userName;
 
     @Size(min = 5)

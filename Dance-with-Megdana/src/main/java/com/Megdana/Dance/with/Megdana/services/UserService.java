@@ -49,7 +49,7 @@ public class UserService {
 
         userModel.setRoles(this.userRepository.count() == 0
                 ? this.roleService.findAllRoles()
-                : Set.of((this.roleService.findRoleByName("USER"))));
+                : Set.of(this.roleService.findRoleByName("USER")));
 
         final User userToSave = this.modelMapper.map(userModel, User.class);
 
