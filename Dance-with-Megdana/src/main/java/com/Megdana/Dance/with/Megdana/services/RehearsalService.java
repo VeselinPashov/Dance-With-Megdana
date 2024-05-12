@@ -60,4 +60,20 @@ public class RehearsalService {
 
         return rehearsal;
     }
+
+    public Rehearsal addDanceToRehearsal (Long rehearsalId, Long danceId) {
+        Optional<Rehearsal> currentRehearsal = this.rehearsalRepository.findById(rehearsalId);
+        Optional<Dance> danceToAdd = this.danceRepository.findById(danceId);
+        if (currentRehearsal.isEmpty() || danceToAdd.isEmpty()) {
+            throw new IllegalArgumentException("Either rehearsal or dance doesn't exist");
+        }
+        Rehearsal rehearsal = currentRehearsal.get();
+        List<Dance> dances = rehearsal.getDances();
+        dances.add(danceToAdd.get());
+        rehearsal.setDances(dances);
+        this.rehearsalRepository.saveAndFlush(rehearsal);
+
+
+        return rehearsal;
+    }
 }

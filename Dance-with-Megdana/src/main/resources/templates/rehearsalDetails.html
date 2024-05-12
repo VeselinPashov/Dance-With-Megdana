@@ -1,7 +1,21 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{/fragments/head}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dance With Megdana</title>
+
+<!--    <script>-->
+<!--        function setFormAction() {-->
+<!--            console.log("Button clicked!");-->
+<!--            const rehearsalId = document.getElementById("rehearsalId").value;-->
+<!--            console.log("Rehearsal ID:", rehearsalId);-->
+<!--            const form = document.getElementById("addDanceForm");-->
+<!--            form.action = "/rehearsals/" + rehearsalId + "/addSong";-->
+<!--            console.log("/rehearsals/" + rehearsalId + "/addSong");-->
+<!--        }-->
+<!--    </script>-->
 </head>
 <body>
 <header th:replace="~{/fragments/navigation}">
@@ -52,10 +66,26 @@
                             </tbody>
                         </table>
 
-                        <div class="buttons">
-                            <a class="btn btn-outline-primary px-4" th:href="@{/}">Home</a>
-                        </div>
+
                     </div>
+
+                    <form action="addDanceToRehearsal" method="post">
+                        <input type="hidden" id="rehearsalId" name="rehearsalId" th:value="${rehearsalDetails.id}">
+                        <select name="danceId">
+                            <option th:each="dance : ${allDanceList}"
+                                    th:value="${dance.id}"
+                                    th:text="${dance.name}"></option>
+                        </select>
+                        <!--<input type="hidden" name="_csrf" th:value="${_csrf.token}">  CSRF token -->
+                        <input type="submit" value="Add Dance">
+
+                    </form>
+
+                    <div class="buttons">
+                        <a class="btn btn-outline-primary px-4" th:href="@{/}">Home</a>
+                    </div>
+
+
                 </div>
             </div>
         </div>

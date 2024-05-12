@@ -92,8 +92,10 @@ public class RehearsalController extends BaseController{
         Optional<Rehearsal> rehearsalToShow = this.rehearsalRepository.findById(id);
 
         rehearsalToShow.ifPresent(rehearsal -> {modelAndView.addObject("rehearsalDetails", rehearsal);
-                                                 modelAndView.addObject("danceList", rehearsal.getDances());}
+                                                modelAndView.addObject("danceList", rehearsal.getDances());}
                                                 );
+        modelAndView.addObject("allDanceList", this.danceRepository.findAll());
+
         return super.view("rehearsalDetails", modelAndView);
     }
 
@@ -108,10 +110,27 @@ public class RehearsalController extends BaseController{
     }
 
 //    @RequestMapping("rehearsalDetails/addDanceToRehearsal/{rehearsalId")
-//    public ModelAndView getAddDanceToRehearsal (@PathVariable Long rehearsalIs,
+//    public ModelAndView getAddDanceToRehearsal (@PathVariable Long rehearsalId,
 //                                                ModelAndView modelAndView) {
+//        if (this.rehearsalRepository.findById(rehearsalId).isPresent()) {
+//            List<Dance> danceList = this.rehearsalRepository.findById(rehearsalId).get().getDances();
+//            modelAndView.addObject("danceList", danceList);
+//        }
+//
+//
+//        return super.view("addDanceToRehearsal", modelAndView);
 //
 //    }
+
+    @RequestMapping("/rehearsalDetails/addDanceToRehearsal")
+    public ModelAndView postAddDanceToRehearsal (@RequestParam Long rehearsalId,
+                                                 @RequestParam  Long danceId,
+                                                 ModelAndView modelAndView){
+        //Long rehearsalId = 5L;
+        modelAndView.addObject(this.rehearsalService.addDanceToRehearsal(rehearsalId, danceId));
+
+        return redirect("/rehearsals/rehearsalDetails/"+rehearsalId);
+    }
 
     @ModelAttribute ("rehearsalAddForm")
     public RehearsalAddForm rehearsalAddForm() {
