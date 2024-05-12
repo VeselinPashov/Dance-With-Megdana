@@ -10,3 +10,4 @@ Time spend:
  -Implementing Dance dunctionality (Add, edit, delete) - 3h
  -Implementing Rehearsal functionality Add and delete (2.5h), edit (location and date) (1h) - 3.5h
  -Adding duration for Song and Dance (and for all their CRUD) - 1.5h
+ -Implementing functionality to add dances to a rehearsal later (4h)
