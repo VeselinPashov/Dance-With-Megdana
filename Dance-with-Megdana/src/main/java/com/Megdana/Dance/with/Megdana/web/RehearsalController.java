@@ -2,7 +2,6 @@ package com.Megdana.Dance.with.Megdana.web;
 
 import com.Megdana.Dance.with.Megdana.domain.dto.binding.RehearsalAddForm;
 import com.Megdana.Dance.with.Megdana.domain.dto.models.RehearsalModel;
-import com.Megdana.Dance.with.Megdana.domain.entities.Dance;
 import com.Megdana.Dance.with.Megdana.domain.entities.Rehearsal;
 import com.Megdana.Dance.with.Megdana.repositories.DanceRepository;
 import com.Megdana.Dance.with.Megdana.repositories.RehearsalRepository;
@@ -15,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -25,13 +23,11 @@ public class RehearsalController extends BaseController{
     private final RehearsalRepository rehearsalRepository;
     private final RehearsalService rehearsalService;
     private final DanceRepository danceRepository;
-    private final ModelMapper modelMapper;
 
     public RehearsalController(RehearsalRepository rehearsalRepository, SongRepository songRepository, RehearsalService rehearsalService, DanceRepository danceRepository, ModelMapper modelMapper) {
         this.rehearsalRepository = rehearsalRepository;
         this.rehearsalService = rehearsalService;
         this.danceRepository = danceRepository;
-        this.modelMapper = modelMapper;
     }
 
     @RequestMapping("/")
