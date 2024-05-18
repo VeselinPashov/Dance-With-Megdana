@@ -42,9 +42,7 @@
 
 
                         <table id="myTable" class="display" style="width:100%">
-                            <div th:if="${@loggedUser.isEditor()}">
-                                <a th:href="@{addDanceToRehearsal/{id}(id=${rehearsalDetails.id})}">Add new Dance</a>
-                            </div>
+
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -80,6 +78,10 @@
                         <input type="submit" value="Add Dance">
 
                     </form>
+
+                    <div th:if="${@loggedUser.isEditor()}">
+                        <a th:href="@{addDanceToRehearsal/{id}(id=${rehearsalDetails.id})}">Add new Dance</a>
+                    </div>
 
                     <div class="buttons">
                         <a class="btn btn-outline-primary px-4" th:href="@{/}">Home</a>

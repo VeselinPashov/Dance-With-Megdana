@@ -55,7 +55,7 @@ public class RehearsalController extends BaseController{
         }
 
         if(bindingResult.hasErrors()) {
-            modelAndView.addObject("rehearsalList", this.rehearsalRepository.findAll());
+            modelAndView.addObject("danceList", this.danceRepository.findAll());
             modelAndView.addObject(rehearsalAddForm);
             return super.view("addRehearsal", modelAndView);
         }

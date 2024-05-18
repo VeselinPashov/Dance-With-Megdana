@@ -52,4 +52,12 @@ public class DanceService {
                                         dance.setDuration((danceModelView.getSong().getDuration()));
                                         this.danceRepository.saveAndFlush(dance);});
     }
+
+    public void updateLastDancedDate(Long id) {
+        Optional<Dance> danceToUpdate = this.danceRepository.findById(id);
+        danceToUpdate.ifPresent(dance -> {
+            dance.setLastPlayedDate(LocalDate.now());
+            this.danceRepository.saveAndFlush(dance);
+        });
+    }
 }

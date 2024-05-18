@@ -19,11 +19,14 @@ public class RehearsalService {
 
     private final DanceRepository danceRepository;
 
+    private final DanceService danceService;
+
     private final ModelMapper modelMapper;
 
-    public RehearsalService(RehearsalRepository rehearsalRepository, DanceRepository danceRepository, ModelMapper modelMapper) {
+    public RehearsalService(RehearsalRepository rehearsalRepository, DanceRepository danceRepository, DanceService danceService, ModelMapper modelMapper) {
         this.rehearsalRepository = rehearsalRepository;
         this.danceRepository = danceRepository;
+        this.danceService = danceService;
         this.modelMapper = modelMapper;
     }
 
@@ -34,6 +37,7 @@ public class RehearsalService {
                 .sum();
         rehearsalAddForm.setDurationInSeconds(danceDuration);
         this.rehearsalRepository.saveAndFlush(this.modelMapper.map(rehearsalAddForm, Rehearsal.class));
+        rehearsalAddForm.getDances().forEach(dance -> this.danceService.updateLastDancedDate(dance.getId()));
     }
 
     public void editRehearsal(RehearsalModel rehearsalModel) {
@@ -69,10 +73,15 @@ public class RehearsalService {
         }
         Rehearsal rehearsal = currentRehearsal.get();
         List<Dance> dances = rehearsal.getDances();
-        dances.add(danceToAdd.get());
-        rehearsal.setDances(dances);
-        this.rehearsalRepository.saveAndFlush(rehearsal);
+        boolean danceInRehearsal = dances.stream()
+                .anyMatch(dance -> Objects.equals(dance.getId(), danceToAdd.get().getId()));
+        if (!danceInRehearsal) {
+            dances.add(danceToAdd.get());
+            rehearsal.setDances(dances);
+            this.rehearsalRepository.saveAndFlush(rehearsal);
+        }
 
+        this.danceService.updateLastDancedDate(danceToAdd.get().getId());
 
         return rehearsal;
     }
