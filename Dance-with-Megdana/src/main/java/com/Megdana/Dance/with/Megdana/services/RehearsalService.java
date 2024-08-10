@@ -59,8 +59,10 @@ public class RehearsalService {
         List<Dance> dances = rehearsal.getDances();
         dances.removeIf(dance -> Objects.equals(dance.getId(), danceId));
         rehearsal.setDances(dances);
+        updateRehearsalDuration(rehearsal);
         this.rehearsalRepository.saveAndFlush(rehearsal);
 
+        updateRehearsalDuration(rehearsal);
 
         return rehearsal;
     }
@@ -78,11 +80,20 @@ public class RehearsalService {
         if (!danceInRehearsal) {
             dances.add(danceToAdd.get());
             rehearsal.setDances(dances);
+            updateRehearsalDuration(rehearsal);
             this.rehearsalRepository.saveAndFlush(rehearsal);
         }
 
         this.danceService.updateLastDancedDate(danceToAdd.get().getId());
 
         return rehearsal;
+    }
+
+    public void updateRehearsalDuration(Rehearsal rehearsal) {
+        int duration = rehearsal.getDances().stream()
+                .mapToInt(Dance::getDuration)
+                .sum();
+        rehearsal.setDurationInSeconds(duration);
+
     }
 }

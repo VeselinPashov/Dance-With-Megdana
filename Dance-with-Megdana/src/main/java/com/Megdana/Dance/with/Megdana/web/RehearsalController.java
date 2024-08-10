@@ -20,6 +20,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("rehearsals")
 public class RehearsalController extends BaseController{
+
+
     private final RehearsalRepository rehearsalRepository;
     private final RehearsalService rehearsalService;
     private final DanceRepository danceRepository;
